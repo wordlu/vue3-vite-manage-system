@@ -1,4 +1,5 @@
 <template>
+    <!-- el-config-provider 全局配置，i18n -->
     <el-config-provider :locale="zhCn">
         <router-view />
     </el-config-provider>

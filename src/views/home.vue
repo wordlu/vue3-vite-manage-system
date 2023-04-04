@@ -27,11 +27,10 @@ const tags = useTagsStore();
 
 // 获取下拉数据
 const getData = () => {
-	reportTmpQuey().then(res => {
+	reportTmpQuey().then((res: any) => {
 		console.log(res)
 	});
 };
 getData();
-
 
 </script>

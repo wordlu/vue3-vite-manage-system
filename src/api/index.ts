@@ -1,7 +1,7 @@
 import axios from '../utils/request';
 
 // post请求
-export const fetchData = () => {
+export const fetchData:any = () => {
     return axios({
       url: '/mdm/index/getTitleMessage',
       method: 'post',
@@ -12,7 +12,7 @@ export const fetchData = () => {
 };
 
 // get请求
-export const reportTmpQuey = () => {
+export const reportTmpQuey:any = () => {
   return axios({
     url: '/mdm/dic/all/class_id?_dc=1680144723940',
     method: 'get',

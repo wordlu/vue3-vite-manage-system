@@ -31,7 +31,11 @@
                                     {{ threeItem.title }}
                                 </el-menu-item>
                             </el-sub-menu>
-                            <el-menu-item v-else :index="subItem.index" v-permiss="item.permiss">
+                            <el-menu-item 
+                              v-else 
+                              :index="subItem.index" 
+                              :key="subItem.index+'nosubs'"
+                              v-permiss="item.permiss">
                                 {{ subItem.title }}
                             </el-menu-item>
                         </template>
