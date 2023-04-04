@@ -172,6 +172,7 @@ const sidebar = useSidebarStore();
     top: 70px;
     bottom: 0;
     overflow-y: scroll;
+    background: #324157;
 }
 .sidebar::-webkit-scrollbar {
     width: 0;
