@@ -1,3 +1,4 @@
+<!-- v-permiss 控制权限，和./store/permiss.ts关联 -->
 <template>
     <div class="sidebar">
         <el-menu
@@ -60,6 +61,19 @@ import { useSidebarStore } from '../store/sidebar';
 import { useRoute } from 'vue-router';
 
 const items = [
+    {
+        icon: 'Notebook',
+        index: '4',
+        title: '基本信息',
+        permiss: '17',
+        subs: [
+            {
+                  index: '/trustee',
+                  title: '策略专户托管机构信息',
+                  permiss: '18',
+            },
+        ]
+    },
     {
         icon: 'Odometer',
         index: '/dashboard',

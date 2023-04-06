@@ -137,6 +137,15 @@ const routes: RouteRecordRaw[] = [
                 },
                 component: () => import(/* webpackChunkName: "import" */ '../views/import.vue'),
             },
+            {
+                path: '/trustee',
+                name: 'trustee',
+                meta: {
+                  title: '策略专户托管机构信息',
+                  permiss: '18',
+                },
+                component: () => import('../views/basicInfo/trustee.vue')
+            }
         ],
     },
     {
@@ -154,7 +163,7 @@ const routes: RouteRecordRaw[] = [
             title: '没有权限',
         },
         component: () => import(/* webpackChunkName: "403" */ '../views/403.vue'),
-    },
+    }
 ];
 
 const router = createRouter({
