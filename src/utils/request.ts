@@ -1,6 +1,7 @@
-import service from "./service.ts"
+import pservice from "./payloadService.js"
+import fservice from "./formDataservice.js"
 
-const axios = ({
+const axios1 = ({
   method,
   url,
   data,
@@ -8,9 +9,9 @@ const axios = ({
 }) => {
   method = method.toLowerCase()
   if (method === "post") {
-    return service.post(url, data, {...config})
+    return pservice.post(url, data, {...config})
   } else if (method === "get") {
-    return service.get(url, {
+    return pservice.get(url, {
       params: data,
       ...config
     })
@@ -20,4 +21,24 @@ const axios = ({
   }
 }
 
-export default axios;
+const axios2 = ({
+  method,
+  url,
+  data,
+  config
+}) => {
+  method = method.toLowerCase()
+  if (method === "post") {
+    return fservice.post(url, data, {...config})
+  } else if (method === "get") {
+    return fservice.get(url, {
+      params: data,
+      ...config
+    })
+  } else {
+    console.log(`未知method: ${method}`)
+    return false
+  }
+}
+
+export { axios1, axios2 };
