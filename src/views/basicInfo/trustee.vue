@@ -10,14 +10,18 @@
         </el-form-item>
         <el-form-item label="审核状态" prop="searchCheck">
           <el-select v-model="formInline.searchCheck" placeholder="审核状态">
-            <el-option label="Zone one" value="shanghai" />
-            <el-option label="Zone two" value="beijing" />
+            <el-option 
+              v-for="item in checkOptions" 
+              :key="item.id" 
+              :label="item.keyName"
+              :value="item.keyId"
+            />
           </el-select>
         </el-form-item>
       </el-form>
       <div class="btn-areas">
         <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button @click="onSubmit">重置</el-button>
+        <el-button @click="onReset">重置</el-button>
       </div>
     </div>
     <div class="table-area">
@@ -26,24 +30,30 @@
       </div>
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column type="selection" width="55" />
-        <el-table-column label="Operations">
+        <el-table-column label="操作">
           <template #default="scope">
             <el-button  
               link
               type="primary"
               @click="handleEdit(scope.$index, scope.row)">
-              Edit
+              审核
+            </el-button>
+            <el-button  
+              link
+              type="primary"
+              @click="handleEdit(scope.$index, scope.row)">
+              编辑
             </el-button>
             <el-button
               link
               type="danger"
               @click="handleDelete(scope.$index, scope.row)">
-              Delete
+              删除
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="orgId" label="托管人代码" width="180" />
-        <el-table-column prop="orgName" label="托管人名称" width="180" />
+        <el-table-column prop="orgId" label="托管人代码"/>
+        <el-table-column prop="orgName" label="托管人名称"/>
         <el-table-column prop="orgSname" label="托管人简称" />
         <el-table-column prop="checkName" label="审核人" />
         <el-table-column prop="mdfyPrsn" label="修改人" />
@@ -56,7 +66,7 @@
 <!-- 语法糖，setup script -->
 <script setup lang="ts" name="truestee">
 import { reactive, ref } from 'vue'
-import { fetchData } from '../../api/trustee';
+import { fetchData, getCheckData } from '../../api/trustee';
 
 interface TableItem {
   id: number,
@@ -68,7 +78,15 @@ interface TableItem {
   createPrsn: string,
 }
 
+interface optionItem {
+  id: string,
+  keyName: string,
+  keyId: string
+}
+
+
 const tableData = ref<TableItem[]>([])
+const checkOptions = ref<optionItem[]>([])
 
 const formInline = reactive({
   searchOrgName: '',
@@ -76,22 +94,44 @@ const formInline = reactive({
   searchCheck: '',
 })
 
-// 获取表格数据
-const getData = () => {
-	fetchData().then((res:any) => {
-    debugger
-		tableData.value = res.data.list;
+//获取下拉框数据
+const getData = (data: any) => {
+	fetchData(data).then((res:any) => {
+		tableData.value = res.data.data;
+    console.log(tableData.value)
 	});
 };
-getData();
+getData({});
+
+// 获取表格数据
+const checkData = () => {
+	getCheckData().then((res:any) => {
+		checkOptions.value = res.data;
+    console.log(checkOptions.value)
+	});
+};
+checkData();
 
 const onSubmit = () => {
-  console.log('submit!')
+  const parmas = {
+    searchOrgName: formInline.searchOrgName,
+    searchOrgId: formInline.searchOrgId,
+    searchCheck: formInline.searchCheck,
+  }
+  getData(parmas)
 }
-const handleEdit = (index: number, row: User) => {
+
+const onReset = () => {
+  formInline.searchOrgName = ''
+  formInline.searchOrgId = ''
+  formInline.searchCheck = ''
+  getData({})
+}
+
+const handleEdit = (index: number, row: TableItem) => {
   console.log(index, row)
 }
-const handleDelete = (index: number, row: User) => {
+const handleDelete = (index: number, row: TableItem) => {
   console.log(index, row)
 }
 
